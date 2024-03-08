@@ -5,5 +5,5 @@ output "ebs" {
 
 output "instance" {
   description = "ID for instance"
-  value       = aws_instance.instance.id
+  value       = aws_instance.instance[count.index].id
 }
