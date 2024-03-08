@@ -4,7 +4,7 @@
     region: 'us-east-1'
     filters:
       # "tag:Name": "ec2-tcc-{{ custenvi }}-{{ custname }}"
-      instance-state-name: [ "running"]
+      instance-state-name: ["running"]
   register: servers
 
 # - ansible.builtin.debug:
@@ -16,6 +16,9 @@
 # - name: 'export variables'
 #   ansible.builtin.set_fact:
 #     pri_ip: "{{ ec2.instances[0].private_ip_address }}"
+
+- ansible.builtin.debug:
+    vars: servers
 
 - name: 'create list variable'
   ansible.builtin.set_fact:
