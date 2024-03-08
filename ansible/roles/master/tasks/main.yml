@@ -1,0 +1,36 @@
+---    
+- name: 'cluster bootstrap'
+  ansible.builtin.shell: "kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+
+- name: 'configure root account as cluster admin'
+  ansible.builtin.file:
+    path: '/root/.kube'
+    state: directory
+
+- name: 'copy user config file'
+  ansible.builtin.copy:
+    remote_src: 'yes'
+    src: '/etc/kubernetes/admin.conf'
+    dest: '/root/.kube/config'
+    owner: 'root'
+    group: 'root'
+    
+- name: 'calico yaml copy'
+  ansible.builtin.copy:
+    src: '/home/david.valiente/ansible/kubernetes_install/roles/master/files/calico.yaml'
+    dest: '/root/calico.yaml'
+    owner: 'root'
+    group: 'root'
+
+- name: 'calico pod network deployment'
+  ansible.builtin.command: "kubectl create -f {{ item }}" 
+  with_items:
+    - '/root/calico.yaml'
+
+- name: 'print-join-command'
+  ansible.builtin.command: 'kubeadm token create --print-join-command'
+  register: 'joincommand'
+
+- name: 'store variables'
+  set_fact:
+    joinmaster: "{{ joincommand.stdout }}"

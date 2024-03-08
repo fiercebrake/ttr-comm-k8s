@@ -1,0 +1,2 @@
+---
+nodejoin: "{{ hostvars[hostvars['localhost']['lst_ips'][0]]['joinmaster']}}"

@@ -1,0 +1,7 @@
+---
+- name: 'join nodes'
+  ansible.builtin.command: "sudo {{ nodejoin }}"
+  register: nodejoinoutput
+
+- ansible.builtin.debug:
+    var: nodejoinoutput

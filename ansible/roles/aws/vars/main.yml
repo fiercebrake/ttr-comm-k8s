@@ -1,0 +1,3 @@
+---
+custenvi: "{{ lookup('ansible.builtin.env', 'TF_VAR_customer_envi') }}"
+custname: "{{ lookup('ansible.builtin.env', 'TF_VAR_customer_name') }}"
