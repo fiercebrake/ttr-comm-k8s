@@ -17,7 +17,7 @@
   ansible.builtin.shell: "{{ item }}"
   with_items:
     - 'source /tmp/path.sh'
-    - "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }} --ignore-preflight-errors=1"
+    - "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }} --ignore-preflight-errors=all"
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
