@@ -17,8 +17,8 @@
 #   ansible.builtin.set_fact:
 #     pri_ip: "{{ ec2.instances[0].private_ip_address }}"
 
-- ansible.builtin.debug:
-    var: servers
+# - ansible.builtin.debug:
+#     var: servers
 
 - name: 'create list variable'
   ansible.builtin.set_fact:
@@ -27,7 +27,7 @@
 - name: 'saving ips in a list'
   ansible.builtin.set_fact:
     lst_ips: "{{ lst_ips + [servers.instances[item].private_ip_address] }}"
-  loop: "{{ range(0, 3) }}"
+  loop: "{{ range(0, 4) }}"
 
 - ansible.builtin.debug:
     var: hostvars['localhost']['lst_ips']
