@@ -33,7 +33,7 @@ locals {
 #   }
 # }
 
-resource "aws_instance" "master-instance" {
+resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
   availability_zone = "us-east-1a"
   instance_type = local.instance_type
