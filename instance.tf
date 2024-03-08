@@ -46,7 +46,7 @@ resource "aws_instance" "instance" {
   count = 2
   key_name = "devops"
   tags = {
-    name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}",
+    name = element("ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}")
     # local.common_tags
   }
 }
