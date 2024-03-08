@@ -11,8 +11,8 @@
 
 - name: 'create list variable'
   ansible.builtin.set_fact:
-    - lst_ips: []
-    - lst_Servers: []
+    lst_ips: []
+    lst_Servers: []
 
 - name: 'saving ips in a list'
   ansible.builtin.set_fact:
