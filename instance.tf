@@ -43,6 +43,7 @@ resource "aws_instance" "instance" {
     jsondecode(data.consul_keys.instance.var.instance)["securitygroup0"],
     jsondecode(data.consul_keys.instance.var.instance)["securitygroup1"]
   ]
+  count = 2
   key_name = "devops"
   tags = local.common_tags
 }
