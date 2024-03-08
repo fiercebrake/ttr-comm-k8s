@@ -15,9 +15,9 @@ locals {
       # probe = "https://${var.customer_doma}"
       handler = var.customer_name
     },
-    {
-      Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}"
-    },
+    # {
+    #   Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}"
+    # },
   )
 }
 
