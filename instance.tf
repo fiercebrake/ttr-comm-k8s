@@ -21,17 +21,17 @@ locals {
   )
 }
 
-resource "aws_ebs_volume" "data" {
-  availability_zone = "us-east-1a"
-  type = "gp3"
-  iops = "3000"
-  throughput = "125"
-  size              = 10
-  tags = {
-    Name = "data_${var.customer_name}"
-    Backup = "true"
-  }
-}
+# resource "aws_ebs_volume" "data" {
+#   availability_zone = "us-east-1a"
+#   type = "gp3"
+#   iops = "3000"
+#   throughput = "125"
+#   size              = 10
+#   tags = {
+#     Name = "data_${var.customer_name}"
+#     Backup = "true"
+#   }
+# }
 
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
@@ -48,8 +48,8 @@ resource "aws_instance" "instance" {
   tags = local.common_tags
 }
 
-resource "aws_volume_attachment" "ebs_att" {
-  device_name = "/dev/sdb"
-  volume_id   = aws_ebs_volume.data.id
-  instance_id = aws_instance.instance[count.index].id
-}
+# resource "aws_volume_attachment" "ebs_att" {
+#   device_name = "/dev/sdb"
+#   volume_id   = aws_ebs_volume.data.id
+#   instance_id = aws_instance.instance[count.index].id
+# }
