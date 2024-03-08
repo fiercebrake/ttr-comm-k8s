@@ -9,46 +9,46 @@
   roles:
    - aws
 
-- name: 'install and copnfigure packages on all servers'
-  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-   - os
+# - name: 'install and copnfigure packages on all servers'
+#   hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#    - os
 
-- name: 'cluster bootstrap'
-  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-    - master
+# - name: 'cluster bootstrap'
+#   hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#     - master
 
-- name: 'join nodes to cluster'
-  hosts: "{{ hostvars['localhost']['lst_ips'] | difference(hostvars['localhost']['lst_ips'][0]) }}"
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-    - nodes
+# - name: 'join nodes to cluster'
+#   hosts: "{{ hostvars['localhost']['lst_ips'] | difference(hostvars['localhost']['lst_ips'][0]) }}"
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#     - nodes
 
-- name: 'restart nodes'
-  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-   - restart
+# - name: 'restart nodes'
+#   hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#    - restart

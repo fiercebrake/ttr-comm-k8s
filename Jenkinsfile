@@ -74,18 +74,18 @@ pipeline {
                 }
             }
         }
-        // stage('AnsibleValidation'){
-        //     steps('Check'){
-        //         sh 'ansible --version'
-        //         sh 'ansible-playbook --version'
-        //         sh 'ansible-lint --version'
-        //         sh 'printenv | grep TF_VAR_'
-        //     }
-        // }
-        // stage('RunPlaybook'){
-        //     steps('Configurate'){
-        //         ansiblePlaybook become: true, colorized: true, credentialsId: 'devops', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/hosts.aws_ec2.yml', playbook: 'ansible/init.yml'
-        //     }
-        // }
+        stage('AnsibleValidation'){
+            steps('Check'){
+                sh 'ansible --version'
+                sh 'ansible-playbook --version'
+                sh 'ansible-lint --version'
+                sh 'printenv | grep TF_VAR_'
+            }
+        }
+        stage('RunPlaybook'){
+            steps('Configurate'){
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'devops', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/hosts.aws_ec2.yml', playbook: 'ansible/init.yml'
+            }
+        }
     }
 }

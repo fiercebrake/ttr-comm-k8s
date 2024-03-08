@@ -44,7 +44,7 @@ resource "aws_instance" "master-instance" {
     jsondecode(data.consul_keys.instance.var.instance)["securitygroup1"]
   ]
   key_name = "devops"
-  count = 3
+  count = 4
   # tags = local.common_tags
   tags = {
     Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}"

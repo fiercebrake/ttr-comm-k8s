@@ -3,16 +3,41 @@
   amazon.aws.ec2_instance_info:
     region: 'us-east-1'
     filters:
-      "tag:Name": "ec2-tcc-{{ custenvi }}-{{ custname }}"
+      # "tag:Name": "ec2-tcc-{{ custenvi }}-{{ custname }}"
       instance-state-name: [ "running"]
-  register: ec2
+  register: servers
 
-- ansible.builtin.debug:
-    msg: "ec2-tcc-{{ custenvi }}-{{ custname }}"
+# - ansible.builtin.debug:
+#     msg: "ec2-tcc-{{ custenvi }}-{{ custname }}"
 
-- ansible.builtin.debug:
-    var: ec2.instances[0].private_ip_address
+# - ansible.builtin.debug:
+#     var: ec2.instances[0].private_ip_address
 
-- name: 'export variables'
+# - name: 'export variables'
+#   ansible.builtin.set_fact:
+#     pri_ip: "{{ ec2.instances[0].private_ip_address }}"
+
+- name: 'create list variable'
   ansible.builtin.set_fact:
-    pri_ip: "{{ ec2.instances[0].private_ip_address }}"
+    lst_ips: []
+
+- name: 'saving ips in a list'
+  ansible.builtin.set_fact:
+    lst_ips: "{{ lst_ips + [servers.results[item].instances[0].network_interfaces[0].private_ip_address] }}"
+  loop: "{{ range(0, servers.results|length) }}"
+
+- ansible.builtin.debug:
+    vars: hostvars['localhost']['lst_ips']
+
+- name: 'store servers sufix'
+  ansible.builtin.set_fact:
+    lst_servers: "{{ name_sf }}"
+    k8s_version: '1.28.3'
+    ctd_version: '1.7.8'
+    rnc_version: '1.1.10'
+    cni_version: '1.3.0'
+    cri_version: '1.28.0'
+    cidr: '192.168.0.0/16'
+
+- name: 'Refresh inventory'
+  meta: refresh_inventory
