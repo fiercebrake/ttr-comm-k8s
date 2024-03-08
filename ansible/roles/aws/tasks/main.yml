@@ -7,7 +7,7 @@
   register: servers
 
 - ansible.builtin.debug:
-    var: servers.instances[0].tags[0]
+    var: servers.instances[0].tags
 
 - name: 'create list variable'
   ansible.builtin.set_fact:
