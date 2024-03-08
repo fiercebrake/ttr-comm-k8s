@@ -1,12 +1,11 @@
 ---
 - name: 'update release version'
-  ansible.builtin.dnf:
-    releasever: '2023.2.20231030'
+  ansible.builtin.yum:
     name: "*"
     state: latest
 
 - name: 'install required packages'
-  ansible.builtin.dnf:
+  ansible.builtin.yum:
     name: 
       - 'socat'
       - 'iproute-tc'
