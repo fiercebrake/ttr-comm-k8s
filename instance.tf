@@ -1,4 +1,4 @@
-resource "random_string" "vm-name" {
+resource "random_string" "ec2-name" {
   length  = 2
   upper   = false
   numeric  = true
@@ -16,7 +16,7 @@ locals {
       handler = var.customer_name
     },
     {
-      Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${random_string.vm-name.result}"
+      Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${random_string.ec2-name.result}"
     },
   )
 }
