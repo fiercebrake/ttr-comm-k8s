@@ -1,9 +1,17 @@
----    
-# - name: 'cluster bootstrap'
-#   ansible.builtin.shell: "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+---
+- name: 'copy user config file'
+  ansible.builtin.copy:
+    src: './roles/master/files/path.sh'
+    dest: '/tmp'
+    mode: '1777'
+    owner: 'root'
+    group: 'root'
 
 - name: 'cluster bootstrap'
-  ansible.builtin.command: "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+  ansible.builtin.shell: "{{ item }}"
+  with_items:
+    - 'source /tmp/path.sh'
+    - "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
 
 # - name: 'configure root account as cluster admin'
 #   ansible.builtin.file:
