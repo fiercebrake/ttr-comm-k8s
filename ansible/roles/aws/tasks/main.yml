@@ -18,7 +18,7 @@
 #     pri_ip: "{{ ec2.instances[0].private_ip_address }}"
 
 - ansible.builtin.debug:
-    vars: servers
+    var: servers
 
 - name: 'create list variable'
   ansible.builtin.set_fact:
@@ -30,7 +30,7 @@
   loop: "{{ range(0, servers.results|length) }}"
 
 - ansible.builtin.debug:
-    vars: hostvars['localhost']['lst_ips']
+    var: hostvars['localhost']['lst_ips']
 
 - name: 'store servers sufix'
   ansible.builtin.set_fact:
