@@ -51,5 +51,5 @@ resource "aws_instance" "instance" {
 resource "aws_volume_attachment" "ebs_att" {
   device_name = "/dev/sdb"
   volume_id   = aws_ebs_volume.data.id
-  instance_id = aws_instance.instance.id
+  instance_id = aws_instance.instance[count.index].id
 }
