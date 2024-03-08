@@ -27,7 +27,7 @@
 - name: 'saving ips in a list'
   ansible.builtin.set_fact:
     lst_ips: "{{ lst_ips + [servers.instances[{{ item }}].private_ip_address] }}"
-  loop: "{{ range(0, servers.instances|length) }}"
+  loop: "{{ range(0, 3) }}"
 
 - ansible.builtin.debug:
     var: hostvars['localhost']['lst_ips']
