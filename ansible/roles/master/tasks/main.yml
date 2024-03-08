@@ -1,10 +1,4 @@
 ---
-- name: 'install crictl'
-  ansible.builtin.yum:
-    lock_timeout: 90
-    name: 'cri-tools'
-    state: latest
-
 - name: 'cluster bootstrap'
   ansible.builtin.shell: "/usr/local/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }} --ignore-preflight-errors=all"
 
