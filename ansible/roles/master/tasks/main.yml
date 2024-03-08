@@ -1,4 +1,10 @@
 ---
+- name: 'install required packages'
+  ansible.builtin.yum:
+    name: 
+      - 'crictl'
+    state: present
+
 - name: 'copy user config file'
   ansible.builtin.copy:
     src: './roles/master/files/path.sh'
