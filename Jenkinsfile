@@ -5,8 +5,8 @@ pipeline {
     }
     parameters {
         string(name: 'CUSTOMER_NAME', description: 'Name to apply to the instance')
-        string(name: 'DATABASE_PASS', description: 'Password to apply to the newly created DB')
-        string(name: 'DOMAIN', description: '(Sub)Domain the LMS will be reachable at')
+        // string(name: 'DATABASE_PASS', description: 'Password to apply to the newly created DB')
+        // string(name: 'DOMAIN', description: '(Sub)Domain the LMS will be reachable at')
         string(name: 'CONSUL_STATE_PATH', defaultValue: 'tcc/us-east-1/instance/state/ins', description: 'Path in Consul for state data')
         string(name: 'WORKSPACE', defaultValue: 'dev', description:'workspace to use in Terraform')
     }
@@ -17,8 +17,8 @@ pipeline {
         TF_IN_AUTOMATION = "TRUE"
         TF_VAR_consul_address = "consul.totaratalent.com"
         TF_VAR_customer_name = "${params.CUSTOMER_NAME}"
-        TF_VAR_customer_pass = "${params.DATABASE_PASS}"
-        TF_VAR_customer_doma = "${params.DOMAIN}"
+        // TF_VAR_customer_pass = "${params.DATABASE_PASS}"
+        // TF_VAR_customer_doma = "${params.DOMAIN}"
         TF_VAR_customer_envi = "${params.WORKSPACE}"
         TF_VAR_rds_pass = credentials('TF_VAR_rds_pass')
         TF_LOG = "WARN"
