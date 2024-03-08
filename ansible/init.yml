@@ -23,8 +23,8 @@
 - name: 'cluster bootstrap'
   hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
   port: '45100'
-  become: 'True'
-  become_user: 'root'
+  # become: 'True'
+  # become_user: 'root'
   gather_facts: True
   vars:
     ansible_python_interpreter: "{{ ansible_playbook_python }}"
