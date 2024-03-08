@@ -1,8 +1,8 @@
 ---
-- name: 'update release version'
-  ansible.builtin.yum:
-    name: "*"
-    state: latest
+# - name: 'update release version'
+#   ansible.builtin.yum:
+#     name: "*"
+#     state: latest
 
 - name: 'install required packages'
   ansible.builtin.yum:
