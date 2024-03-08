@@ -15,9 +15,9 @@ locals {
       # probe = "https://${var.customer_doma}"
       handler = var.customer_name
     },
-    # {
-    #   Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}"
-    # },
+    {
+      Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}"
+    },
   )
 }
 
@@ -33,7 +33,7 @@ locals {
 #   }
 # }
 
-resource "aws_instance" "instance" {
+resource "aws_instance" "master-instance" {
   ami           = data.aws_ami.ami.id
   availability_zone = "us-east-1a"
   instance_type = local.instance_type
@@ -43,13 +43,14 @@ resource "aws_instance" "instance" {
     jsondecode(data.consul_keys.instance.var.instance)["securitygroup0"],
     jsondecode(data.consul_keys.instance.var.instance)["securitygroup1"]
   ]
-  count = 2
   key_name = "devops"
+  count = 3
+  # tags = local.common_tags
   tags = {
     Name = "ec2-tcc-${terraform.workspace}-${var.customer_name}-${count.index}"
-    # local.common_tags
   }
 }
+
 
 # resource "aws_volume_attachment" "ebs_att" {
 #   device_name = "/dev/sdb"

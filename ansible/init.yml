@@ -1,4 +1,14 @@
 ---
+- name: 'get instances'
+  hosts: localhost
+  become: 'True'
+  become_user: 'root'
+  gather_facts: False
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  roles:
+   - aws
+
 - name: 'install and copnfigure packages on all servers'
   hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
   port: '45100'
