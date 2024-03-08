@@ -22,9 +22,9 @@ variable "consul_datacenter" {
 
 variable "customer_name" {}
 
-variable "customer_pass" {}
+# variable "customer_pass" {}
 
-variable "customer_doma" {}
+# variable "customer_doma" {}
 
 variable "db_hostname" {
   default = "mysql57test.cjn38es2ruxd.us-west-2.rds.amazonaws.com"

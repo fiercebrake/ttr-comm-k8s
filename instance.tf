@@ -12,7 +12,7 @@ locals {
   common_tags = merge(jsondecode(data.consul_keys.instance.var.com_tags),
     {
       Environment = terraform.workspace
-      probe = "https://${var.customer_doma}"
+      # probe = "https://${var.customer_doma}"
       handler = var.customer_name
     },
     {
