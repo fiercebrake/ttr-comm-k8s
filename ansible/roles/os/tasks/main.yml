@@ -145,6 +145,8 @@
     remote_src: 'yes'
     src: "/tmp/crictl-v{{ hostvars['localhost']['cri_version'] }}-linux-amd64.tar.gz"
     dest: '/usr/local/bin/'
+    owner: 'root'
+    group: 'root'
 
 - name: 'load overlay and br_netfilter mods'
   ansible.builtin.command: "modprobe {{ item }}"
