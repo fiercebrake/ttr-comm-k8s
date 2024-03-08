@@ -26,7 +26,7 @@
 
 - name: 'saving ips in a list'
   ansible.builtin.set_fact:
-    lst_ips: "{{ lst_ips + [servers.results[item].instances[0].network_interfaces[0].private_ip_address] }}"
+    lst_ips: "{{ lst_ips + [servers.instances[{{ item }}].private_ip_address] }}"
   loop: "{{ range(0, servers.results|length) }}"
 
 - ansible.builtin.debug:
