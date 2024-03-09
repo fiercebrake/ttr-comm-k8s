@@ -203,10 +203,9 @@
   ansible.builtin.reboot:
 
 - name: 'Wait for instance to become available'
-  ansiblle.builltin.wait_for:
-    port: 45100
+  ansible.builtin.wait_for:
     host: "{{ hostvars['localhost']['lst_ips'][0] }}"
+    port: 45100
     search_regex: OpenSSH
     delay: 10
     timeout: 180
-  connection: local
