@@ -13,9 +13,7 @@
     mode: '0777'
 
 - name: 'cluster bootstrap'
-  ansible.builtin.command: '/root/init.sh' 
-  args:
-    executable: '/bin/bash'
+  ansible.builtin.command: '/bin/bash /root/init.sh' 
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
