@@ -208,3 +208,4 @@
     host: "{{ hostvars['localhost']['lst_ips'][0] }}"
     search_regex: OpenSSH
     delay: 10
+  connection: local
