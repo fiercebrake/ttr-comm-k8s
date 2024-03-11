@@ -12,7 +12,6 @@
       - 'socat'
       - 'iproute-tc'
       - 'conntrack-tools'
-      - 'cri-tools'
     state: present
 
 - name: 'containerd package download'
@@ -206,6 +205,6 @@
   ansible.builtin.wait_for:
     host: "{{ hostvars['localhost']['lst_ips'][0] }}"
     port: 45100
-    search_regex: OpenSSH
+    search_regex: "OpenSSH"
     delay: 10
     timeout: 180
