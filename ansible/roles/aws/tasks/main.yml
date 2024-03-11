@@ -4,8 +4,6 @@
     region: 'us-east-1'
     filters:
       instance-state-name: ["running"]
-      availability-zone: us-east-1
-      "tag:Name": "ec2-tcc-dev-demos-*"
   register: servers
 
 - name: 'create list variable'
