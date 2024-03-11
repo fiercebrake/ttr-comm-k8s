@@ -17,7 +17,7 @@
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
     cmd: "/usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
-    chdir: $HOME
+    chdir: '/root'
     creates: cluster_initialized.txt
   # register: result
   # until: result.stdout.find("Your Kubernetes master has initialized successfully!") != -1

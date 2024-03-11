@@ -31,7 +31,7 @@
     state: directory
 
 - name: 'containerd generate conf'
-  ansible.builtin.shell: 'sudo containerd config default | tee /etc/containerd/config.toml'
+  ansible.builtin.command: 'containerd config default | tee /etc/containerd/config.toml'
 
 - name: 'containerd tweak 0'
   ansible.builtin.replace:
