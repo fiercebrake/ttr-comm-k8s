@@ -1,6 +1,8 @@
 ---
 - name: 'join nodes'
-  ansible.builtin.command: "sudo {{ joinnode }} --ignore-preflight-errors=all"
+  ansible.builtin.command: "sudo {{ joinnode }}"
+  async: 90
+  poll: 0
   register: nodejoinoutput
 
 - ansible.builtin.debug:
