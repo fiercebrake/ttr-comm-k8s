@@ -1,10 +1,4 @@
 ---
-# - name: 'update release version'
-#   ansible.builtin.yum:
-#     lock_timeout: 90
-#     name: "*"
-#     state: latest
-
 - name: 'install required packages'
   ansible.builtin.yum:
     lock_timeout: 90
