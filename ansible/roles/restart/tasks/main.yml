@@ -2,8 +2,8 @@
 - name: 'deploy basic firewall security'
   ansible.builtin.lineinfile:
     path: '/etc/sysconfig/iptables'
-    insertbefore: '-A INPUT -p tcp -m tcp -m multiport --dports 5666,45100 -j ACCEPT'
-    line: "-A INPUT -s {{ item }} -j ACCEPT"
+    insertafter: '-A INPUT -i lo -j ACCEPT'
+    line: "-A INPUT -s {{ item }} -m comment --comment "K8S trafffic" -j ACCEPT"
   with_items:
     - "{{ hostvars['localhost']['lst_ips'] }}" 
 
