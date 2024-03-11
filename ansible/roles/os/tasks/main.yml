@@ -193,13 +193,13 @@
     name: kubelet.service
     enabled: yes
 
-- name: 'restart all servers'
-  ansible.builtin.reboot:
+# - name: 'restart all servers'
+#   ansible.builtin.reboot:
 
-- name: 'Wait for instance to become available'
-  ansible.builtin.wait_for:
-    port: 45100
-    host: "{{ hostvars['localhost']['lst_ips'][0] }}"
-    search_regex: OpenSSH
-    delay: 10
-  connection: local
+# - name: 'Wait for instance to become available'
+#   ansible.builtin.wait_for:
+#     port: 45100
+#     host: "{{ hostvars['localhost']['lst_ips'][0] }}"
+#     search_regex: OpenSSH
+#     delay: 10
+#   connection: local
