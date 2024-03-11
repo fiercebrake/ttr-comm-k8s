@@ -27,7 +27,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         aws_profile = "ec4l"
-        PATH = "$TF_HOME:$PATH"
+        // PATH = "$TF_HOME:$PATH"
     }
 
     stages {
