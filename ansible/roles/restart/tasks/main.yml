@@ -7,5 +7,8 @@
   with_items:
     - "{{ hostvars['localhost']['lst_ips'] }}" 
 
+- ansible.builltin.debug:
+    msg: "Master node is {{ hostvars['localhost']['lst_ips'][0] }}"
+
 - name: 'restart all servers'
   ansible.builtin.reboot:
