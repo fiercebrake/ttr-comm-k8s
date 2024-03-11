@@ -1,33 +1,33 @@
 ---
-# - name: 'install required packages'
-#   ansible.builtin.yum:
-#     lock_timeout: 90
-#     name: 
-#       - 'socat'
-#       - 'iproute-tc'
-#       - 'conntrack-tools'
-#     state: present
+- name: 'install required packages'
+  ansible.builtin.yum:
+    lock_timeout: 90
+    name: 
+      - 'socat'
+      - 'iproute-tc'
+      - 'conntrack-tools'
+    state: present
 
-# - name: 'containerd package download'
-#   ansible.builtin.get_url:
-#     url: "https://github.com/containerd/containerd/releases/download/v{{ hostvars['localhost']['ctd_version'] }}/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
-#     dest: '/tmp/'
+- name: 'containerd package download'
+  ansible.builtin.get_url:
+    url: "https://github.com/containerd/containerd/releases/download/v{{ hostvars['localhost']['ctd_version'] }}/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
+    dest: '/tmp/'
  
-# - name: 'containerd extract'
-#   ansible.builtin.unarchive:
-#     remote_src: 'yes'
-#     src: "/tmp/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
-#     dest: '/usr/local'
+- name: 'containerd extract'
+  ansible.builtin.unarchive:
+    remote_src: 'yes'
+    src: "/tmp/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
+    dest: '/usr/local'
 
-# - name: 'containerd service install'
-#   ansible.builtin.get_url:
-#     url: 'https://raw.githubusercontent.com/containerd/containerd/main/containerd.service'
-#     dest: '/etc/systemd/system/'
+- name: 'containerd service install'
+  ansible.builtin.get_url:
+    url: 'https://raw.githubusercontent.com/containerd/containerd/main/containerd.service'
+    dest: '/etc/systemd/system/'
 
-# - name: 'containerd create directory'
-#   ansible.builtin.file:
-#     path: '/etc/containerd/'
-#     state: directory
+- name: 'containerd create directory'
+  ansible.builtin.file:
+    path: '/etc/containerd/'
+    state: directory
 
 - name: 'containerd generate conf'
   ansible.builtin.shell: 
@@ -198,14 +198,3 @@
   ansible.builtin.service:
     name: kubelet.service
     enabled: yes
-
-# - name: 'restart all servers'
-#   ansible.builtin.reboot:
-
-# - name: 'Wait for instance to become available'
-#   ansible.builtin.wait_for:
-#     port: 45100
-#     host: "{{ hostvars['localhost']['lst_ips'][0] }}"
-#     search_regex: OpenSSH
-#     delay: 10
-#   connection: local
