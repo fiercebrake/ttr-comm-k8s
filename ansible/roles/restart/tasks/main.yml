@@ -3,7 +3,7 @@
   ansible.builtin.lineinfile:
     path: '/etc/sysconfig/iptables'
     insertafter: '-A INPUT -i lo -j ACCEPT'
-    line: "-A INPUT -s {{ item }} -m comment --comment "K8S trafffic" -j ACCEPT"
+    line: "-A INPUT -s {{ item }} -m comment --comment 'K8S trafffic' -j ACCEPT"
   with_items:
     - "{{ hostvars['localhost']['lst_ips'] }}" 
 
