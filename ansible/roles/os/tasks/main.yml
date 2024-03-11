@@ -31,7 +31,7 @@
 
 - name: 'containerd generate conf'
   ansible.builtin.shell: 
-    cmd: 'containerd config default'
+    cmd: '/usr/local/bin/containerd config default'
   register: config
 
 - name: 'containerd write conf'
