@@ -19,10 +19,10 @@
     cmd: "/root/init.sh"
     chdir: $HOME
     creates: cluster_initialized.txt
-  register: result
-  until: result.stdout.find("Your Kubernetes master has initialized successfully!") != -1
-  retries: 1
-  delay: 60
+  # register: result
+  # until: result.stdout.find("Your Kubernetes master has initialized successfully!") != -1
+  # retries: 1
+  # delay: 60
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
