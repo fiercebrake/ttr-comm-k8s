@@ -108,7 +108,7 @@
     - 'mounter'
 
 - name: 'install k8 executables'
-  ansible.builtin.command: "install -o root -g root -m 0755 /tmp/{{ item }} /usr/bin/{{ item }}"
+  ansible.builtin.shell: "sudo install -o root -g root -m 0775 /tmp/{{ item }} /usr/bin/{{ item }}"
   with_items:
     - 'apiextensions-apiserver'
     - 'kube-aggregator'
