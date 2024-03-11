@@ -84,7 +84,7 @@ pipeline {
         }
         stage('RunPlaybook'){
             steps('Configurate'){
-                ansiblePlaybook become: true, colorized: true, credentialsId: 'devops', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/hosts.aws_ec2.yml', playbook: 'ansible/init.yml'
+                ansiblePlaybook credentialsId: 'devops', disableHostKeyChecking: true, installation: 'ansible', inventory: 'ansible/hosts.aws_ec2.yml', playbook: 'ansible/init.yml'
             }
         }
     }
