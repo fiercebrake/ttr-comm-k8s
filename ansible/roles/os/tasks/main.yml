@@ -32,8 +32,6 @@
 - name: 'containerd generate conf'
   ansible.builtin.shell: 
     cmd: 'sudo containerd config default | tee /etc/containerd/config.toml'
-    chdir: '/root'
-    creates: containerd.txt
 
 - name: 'containerd tweak 0'
   ansible.builtin.replace:
