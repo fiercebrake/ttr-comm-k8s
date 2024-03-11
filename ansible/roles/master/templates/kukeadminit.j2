@@ -1,3 +1,4 @@
 #!/bin/bash
 
-sudo /usr/local/bin/kubeadm init --pod-network-cidr {{ cidr }} --apiserver-advertise-address {{ address }} --kubernetes-version {{ k8s }} --node-name {{ node }}"
+# sudo /usr/local/bin/kubeadm init --pod-network-cidr {{ cidr }} --apiserver-advertise-address {{ address }} --kubernetes-version {{ k8s }} --node-name {{ node }}"
+sudo /usr/local/bin/kubeadm init --pod-network-cidr {{ cidr }} --apiserver-advertise-address 10.6.10.111 --kubernetes-version {{ k8s }} --node-name {{ node }}"

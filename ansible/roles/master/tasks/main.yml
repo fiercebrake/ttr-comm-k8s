@@ -13,7 +13,7 @@
     mode: '0777'
 
 - name: 'cluster bootstrap'
-  ansible.builtin.script: '/root/init.sh' 
+  ansible.builtin.command: '/root/init.sh' 
   args:
     executable: '/bin/bash'
 
