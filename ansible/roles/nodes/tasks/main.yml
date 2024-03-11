@@ -2,7 +2,7 @@
 - name: 'join nodes'
   ansible.builtin.shell: 
     cmd: "sudo {{ joinnode }} --ignore-preflight-errors=all"
-    chdir: '/usr/local/bin'
+    chdir: '/usr/bin'
   async: 90
   poll: 0
   register: nodejoinoutput

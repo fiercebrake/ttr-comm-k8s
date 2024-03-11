@@ -1,7 +1,7 @@
 ---
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "sudo kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }} --ignore-preflight-errors=all"
+    cmd: "sudo /usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }} --ignore-preflight-errors=all"
     chdir: '/usr/bin'
   async: 90
   poll: 0
@@ -31,14 +31,14 @@
 
 - name: 'calico pod network deployment'
   ansible.builtin.shell: 
-    cmd: "sudo kubectl create -f /root/calico.yaml"
+    cmd: "sudo /usr/bin/kubectl create -f /root/calico.yaml"
     chdir: '/usr/bin'
   async: 90
   poll: 0 
 
 - name: 'print-join-command'
   ansible.builtin.shell: 
-    cmd: 'sudo kubeadm token create --print-join-command'
+    cmd: 'sudo /usr/bin/kubeadm token create --print-join-command'
     chdir: '/usr/bin'
   async: 90
   poll: 0 
