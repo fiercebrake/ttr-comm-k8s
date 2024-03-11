@@ -30,7 +30,7 @@
     state: directory
 
 - name: 'containerd generate conf'
-  ansible.builtin.shelll: 
+  ansible.builtin.shell: 
     cmd: 'sudo containerd config default | tee /etc/containerd/config.toml'
     chdir: '/root'
     creates: containerd.txt
