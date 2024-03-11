@@ -31,7 +31,13 @@
 
 - name: 'containerd generate conf'
   ansible.builtin.shell: 
-    cmd: 'sudo containerd config default | tee /etc/containerd/config.toml'
+    cmd: 'containerd config default'
+  register: config
+
+- name: 'containerd write conf'
+  ansible.builtin.copy: 
+    content: "{{ config.stdout }}"
+    dest: "/etc/containerd/config.toml"
 
 - name: 'containerd tweak 0'
   ansible.builtin.replace:
