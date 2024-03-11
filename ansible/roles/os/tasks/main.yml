@@ -6,7 +6,6 @@
       - 'socat'
       - 'iproute-tc'
       - 'conntrack-tools'
-      - 'cri-tools'
     state: present
 
 - name: 'containerd package download'
