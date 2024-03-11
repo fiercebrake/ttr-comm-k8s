@@ -79,7 +79,6 @@ pipeline {
                 sh 'ansible --version'
                 sh 'ansible-playbook --version'
                 sh 'ansible-lint --version'
-                sh 'printenv | grep TF_VAR_'
             }
         }
         stage('RunPlaybook'){
