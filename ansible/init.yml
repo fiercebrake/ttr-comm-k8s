@@ -21,7 +21,7 @@
 #    - os
 
 - name: 'cluster bootstrap'
-  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
+  hosts: '10.6.10.111' # "{{ hostvars['localhost']['lst_ips'][0] }}"
   port: '45100'
   become: 'True'
   become_user: 'root'
