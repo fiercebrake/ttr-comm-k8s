@@ -1,10 +1,23 @@
 ---
+# - name: 'cluster bootstrap'
+#   ansible.builtin.shell: 
+#     cmd: "sudo /usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+#     chdir: '/usr/bin'
+#   async: 90
+#   poll: 0
+
+- name: 'copy script'
+  ansible.builtin.template:
+    src: './rolles/master/templates/init.j2'
+    dest: '/root/init.sh'
+    owner: root
+    group: root
+    mode: '0777'
+
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "sudo /usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+    cmd: "sudo source /root/init.sh"
     chdir: '/usr/bin'
-  async: 90
-  poll: 0
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
