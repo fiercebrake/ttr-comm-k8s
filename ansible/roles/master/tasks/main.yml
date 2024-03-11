@@ -16,12 +16,12 @@
 
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "sudo source /root/init.sh"
+    cmd: "/root/init.sh"
     chdir: '/usr/bin'
   register: result
   until: result.stdout.find("Your Kubernetes master has initialized successfully!") != -1
   retries: 1
-  delay: 20
+  delay: 60
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
