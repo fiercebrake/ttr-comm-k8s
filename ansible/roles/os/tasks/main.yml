@@ -108,7 +108,7 @@
     - 'mounter'
 
 - name: 'install k8 executables'
-  ansible.builtin.command: "install -o root -g root -m 0755 /tmp/{{ item }} /usr/local/bin/{{ item }}"
+  ansible.builtin.command: "install -o root -g root -m 0755 /tmp/{{ item }} /usr/bin/{{ item }}"
   with_items:
     - 'apiextensions-apiserver'
     - 'kube-aggregator'
@@ -147,7 +147,7 @@
   ansible.builtin.unarchive:
     remote_src: 'yes'
     src: "/tmp/crictl-v{{ hostvars['localhost']['cri_version'] }}-linux-amd64.tar.gz"
-    dest: '/usr/local/bin/'
+    dest: '/usr/bin/'
     owner: 'root'
     group: 'root'
 
