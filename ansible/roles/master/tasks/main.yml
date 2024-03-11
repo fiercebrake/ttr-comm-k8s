@@ -6,17 +6,17 @@
 #   async: 90
 #   poll: 0
 
-- name: 'copy script'
-  ansible.builtin.template:
-    src: './roles/master/templates/init.j2'
-    dest: '/root/init.sh'
-    owner: root
-    group: root
-    mode: '0777'
+# - name: 'copy script'
+#   ansible.builtin.template:
+#     src: './roles/master/templates/init.j2'
+#     dest: '/root/init.sh'
+#     owner: root
+#     group: root
+#     mode: '0777'
 
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "/root/init.sh"
+    cmd: "/usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
     chdir: $HOME
     creates: cluster_initialized.txt
   # register: result
