@@ -204,8 +204,7 @@
 
 - name: 'Wait for instance to become available'
   ansible.builtin.wait_for:
-    host: "{{ hostvars['localhost']['lst_ips'][0] }}"
     port: 45100
-    search_regex: "OpenSSH"
+    host: "{{ hostvars['localhost']['lst_ips'][0] }}"
+    search_regex: OpenSSH
     delay: 10
-    timeout: 
