@@ -7,4 +7,4 @@
   register: nodejoin
 
 - ansible.builtin.debug:
-    var: nodejoin.output
+    var: nodejoin.stdout

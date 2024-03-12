@@ -213,6 +213,22 @@
   with_items:
     - "{{ hostvars['localhost']['lst_ips'] }}" 
     
+- name: 'nodeportc firewall security'
+  ansible.builtin.lineinfile:
+    path: '/etc/sysconfig/iptables'
+    insertafter: '-A INPUT -i lo -j ACCEPT'
+    line: "-A INPUT -p tcp --dport 30080 -m comment --comment 'K8s nodeport access' -j ACCEPT"
+  with_items:
+    - "{{ hostvars['localhost']['lst_ips'] }}" 
+
+- name: 'targetport firewall security'
+  ansible.builtin.lineinfile:
+    path: '/etc/sysconfig/iptables'
+    insertafter: '-A INPUT -i lo -j ACCEPT'
+    line: "-A INPUT -p tcp --dport 8080 -m comment --comment 'K8s targetport access' -j ACCEPT"
+  with_items:
+    - "{{ hostvars['localhost']['lst_ips'] }}" 
+
 - name: 'reboot all instances'
   ansible.builtin.reboot:
 
