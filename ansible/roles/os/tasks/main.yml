@@ -1,4 +1,10 @@
 ---
+- name: 'stop and disable nginx'
+  ansible.builtin.service:
+    name: 'nginx'
+    state: stopped
+    enabled: no
+    
 - name: 'install required packages'
   ansible.builtin.yum:
     lock_timeout: 90
