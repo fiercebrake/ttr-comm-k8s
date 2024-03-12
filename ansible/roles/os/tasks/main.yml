@@ -198,3 +198,22 @@
   ansible.builtin.service:
     name: kubelet.service
     enabled: yes
+
+- name: 'deploy basic firewall security'
+  ansible.builtin.lineinfile:
+    path: '/etc/sysconfig/iptables'
+    insertafter: '-A INPUT -i lo -j ACCEPT'
+    line: "-A INPUT -s {{ item }} -m comment --comment 'K8S trafffic' -j ACCEPT"
+  with_items:
+    - "{{ hostvars['localhost']['lst_ips'] }}" 
+    
+- name: 'reboot all instances'
+  ansible.builtin.reboot:
+
+- name: 'wait for masteer to become available'
+  ansible.builtin.wait_for:
+    port: 45100
+    host: "{{ hostvars['localhost']['lst_ips'][0] }}"
+    search_regex: OpenSSH
+    delay: 10
+  connection: local

@@ -1,14 +1,17 @@
 ---
-- name: 'deploy basic firewall security'
-  ansible.builtin.lineinfile:
-    path: '/etc/sysconfig/iptables'
-    insertafter: '-A INPUT -i lo -j ACCEPT'
-    line: "-A INPUT -s {{ item }} -m comment --comment 'K8S trafffic' -j ACCEPT"
-  with_items:
-    - "{{ hostvars['localhost']['lst_ips'] }}" 
+# - name: 'deploy basic firewall security'
+#   ansible.builtin.lineinfile:
+#     path: '/etc/sysconfig/iptables'
+#     insertafter: '-A INPUT -i lo -j ACCEPT'
+#     line: "-A INPUT -s {{ item }} -m comment --comment 'K8S trafffic' -j ACCEPT"
+#   with_items:
+#     - "{{ hostvars['localhost']['lst_ips'] }}" 
 
-- ansible.builtin.debug:
-    msg: "Master node is {{ hostvars['localhost']['lst_ips'][0] }}"
+# - ansible.builtin.debug:
+#     msg: "Master node is {{ hostvars['localhost']['lst_ips'][0] }}"
 
-- name: 'restart all servers'
-  ansible.builtin.reboot:
+# - name: 'restart all servers'
+#   ansible.builtin.reboot:
+
+- name: 'deploy app'
+  ansiblle.builtin.command: 'kubelet apply -f /root/java-hw.yml'

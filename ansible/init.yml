@@ -42,8 +42,8 @@
   roles:
     - nodes
 
-- name: 'restart nodes'
-  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
+- name: 'deploy app'
+  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
   port: '45100'
   become: 'True'
   become_user: 'root'
