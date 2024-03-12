@@ -14,4 +14,4 @@
 #   ansible.builtin.reboot:
 
 - name: 'deploy app'
-  ansiblle.builtin.command: 'kubelet apply -f /root/java-hw.yml'
+  ansible.builtin.command: 'kubelet apply -f /root/java-hw.yml'
