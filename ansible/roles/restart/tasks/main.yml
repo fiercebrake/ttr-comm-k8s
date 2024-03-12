@@ -7,11 +7,11 @@
 #   with_items:
 #     - "{{ hostvars['localhost']['lst_ips'] }}" 
 
-# - ansible.builtin.debug:
-#     msg: "Master node is {{ hostvars['localhost']['lst_ips'][0] }}"
-
-# - name: 'restart all servers'
-#   ansible.builtin.reboot:
-
 - name: 'deploy app'
   ansible.builtin.command: 'kubectl apply -f /root/java-hw.yml'
+
+- ansible.builtin.debug:
+    msg: "Master node is {{ hostvars['localhost']['lst_ips'][0] }}"
+
+- name: 'restart all servers'
+  ansible.builtin.reboot:

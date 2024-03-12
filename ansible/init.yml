@@ -1,4 +1,10 @@
 ---
+- name: 'stop and disable nginx'
+  ansible.builtin.service:
+    name: 'nginx'
+    state: stopped
+    enabled: no
+
 - name: 'get instances'
   hosts: localhost
   become: 'True'
