@@ -4,7 +4,7 @@
     name: 'nginx'
     state: stopped
     enabled: no
-    
+
 - name: 'install required packages'
   ansible.builtin.yum:
     lock_timeout: 90
@@ -210,14 +210,6 @@
     path: '/etc/sysconfig/iptables'
     insertafter: '-A INPUT -i lo -j ACCEPT'
     line: "-A INPUT -s {{ item }} -m comment --comment 'K8S trafffic' -j ACCEPT"
-  with_items:
-    - "{{ hostvars['localhost']['lst_ips'] }}" 
-
-- name: 'deploy basic firewall security'
-  ansible.builtin.lineinfile:
-    path: '/etc/sysconfig/iptables'
-    insertafter: '-A INPUT -i lo -j ACCEPT'
-    line: "-A INPUT -p tcp --dport 30080 -m comment --comment 'nodeport traffic' -j ACCEPT"
   with_items:
     - "{{ hostvars['localhost']['lst_ips'] }}" 
     
