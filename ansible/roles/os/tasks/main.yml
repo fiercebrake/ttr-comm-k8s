@@ -1,9 +1,12 @@
 ---
 - name: 'stop and disable nginx'
   ansible.builtin.service:
-    name: 'nginx'
+    name: "{{ item }}"
     state: stopped
     enabled: no
+  with_items:
+    - 'nginx'
+    - 'fail2ban'
 
 - name: 'install required packages'
   ansible.builtin.yum:
