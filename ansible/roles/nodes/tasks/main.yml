@@ -1,4 +1,10 @@
 ---
+- name: 'create manifests directory'
+  ansible.builtin.file:
+    path: '/etc/kubernetes/manifests'
+    state: directory
+    mode: '0775'  
+
 - name: 'join nodes'
   ansible.builtin.shell: 
     cmd: "{{ joinnode }}"
@@ -7,4 +13,4 @@
   register: nodejoin
 
 - ansible.builtin.debug:
-    var: nodejoin.stdout
+    var: nodejoin
