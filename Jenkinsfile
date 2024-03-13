@@ -5,7 +5,6 @@ pipeline {
     }
     parameters {
         string(name: 'CUSTOMER_NAME', description: 'Name to apply to the instance')
-        string(name: 'CONSUL_STATE_PATH', defaultValue: 'tcc/us-east-1/instance/state/ins', description: 'Path in Consul for state data')
         string(name: 'WORKSPACE', defaultValue: 'dev', description:'workspace to use in Terraform')
     }
 
@@ -29,7 +28,7 @@ pipeline {
         stage('NetworkInit'){
             steps {
                     sh 'terraform --version'
-                    sh "terraform init --backend-config='path=${params.CONSUL_STATE_PATH}'"
+                    sh "terraform init --backend-config='path=tcc/us-east-1/instance/state/ins'"
             }
         }
         stage('NetworkValidate'){
