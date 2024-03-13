@@ -19,9 +19,9 @@
   ansible.builtin.set_fact:
     lst_servers: "{{ name_sf }}"
     k8s_version: '1.29.2'
-    ctd_version: '1.7.14'
-    rnc_version: '1.1.12'
-    cni_version: '1.4.1'
+    ctd_version: '1.7.11'
+    rnc_version: '1.1.11'
+    cni_version: '1.2.0'
     cri_version: '1.29.0'
     cidr: '192.168.0.0/16'
 

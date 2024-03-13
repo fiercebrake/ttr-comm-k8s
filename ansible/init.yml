@@ -42,8 +42,8 @@
   roles:
     - nodes
 
-- name: 'deploy app'
-  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
+- name: 'restart all nodes'
+  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
   port: '45100'
   become: 'True'
   become_user: 'root'
@@ -52,3 +52,14 @@
     ansible_python_interpreter: "{{ ansible_playbook_python }}"
   roles:
    - restart
+
+- name: 'app deployment'
+  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
+  port: '45100'
+  become: 'True'
+  become_user: 'root'
+  gather_facts: False
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  roles:
+    - app

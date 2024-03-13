@@ -35,6 +35,19 @@
   async: 90
   poll: 0 
 
+- name: 'master firewall security'
+  ansible.builtin.lineinfile:
+    path: '/etc/sysconfig/iptables'
+    insertafter: '-A INPUT -i lo -j ACCEPT'
+    line: "{{ item }}"
+  with_items:
+    - '-A INPUT -p tcp --dport 6443 -m comment --comment "master node traffic" -j ACCEPT'
+    - '-A INPUT -p tcp --dport 2379-2380 -m comment --comment "master node traffic" -j ACCEPT'
+    - '-A INPUT -p tcp --dport 10250 -m comment --comment "master node traffic" -j ACCEPT'
+    - '-A INPUT -p tcp --dport 10251 -m comment --comment "master node traffic" -j ACCEPT'
+    - '-A INPUT -p tcp --dport 10252 -m comment --comment "master node traffic" -j ACCEPT'
+    - '-A INPUT -p tcp --dport 10255 -m comment --comment "master node traffic" -j ACCEPT'
+
 - name: 'print-join-command'
   ansible.builtin.shell: 
     cmd: '/usr/bin/kubeadm token create --print-join-command'
