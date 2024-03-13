@@ -1,5 +1,5 @@
 ---
-- name: 'stop and disable nginx'
+- name: 'start and enablee iptables'
   ansible.builtin.service:
     name: 'iptables'
     state: started
