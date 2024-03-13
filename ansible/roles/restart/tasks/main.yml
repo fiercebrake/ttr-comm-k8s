@@ -8,10 +8,10 @@
 - name: 'reboot all instances'
   ansible.builtin.reboot:
 
-- name: 'wait for masteer to become available'
+- name: 'wait for all nodes to become available'
   ansible.builtin.wait_for:
     port: 45100
-    host: "{{ hostvars['localhost']['lst_ips'][0] }}"
+    host: "{{ hostvars['localhost']['lst_ips'] }}"
     search_regex: OpenSSH
     delay: 10
   connection: local

@@ -21,6 +21,7 @@
     insertafter: '-A INPUT -i lo -j ACCEPT'
     line: "{{ item }}"
   with_items:
+    - '-A INPUT -p tcp --dport 10250 -m comment --comment "node traffic" -j ACCEPT'
     - '-A INPUT -p tcp --dport 10251 -m comment --comment "node traffic" -j ACCEPT'
     - '-A INPUT -p tcp --dport 10255 -m comment --comment "node traffic" -j ACCEPT'
     - '-A INPUT -p tcp --dport 30080 -m comment --comment "nodeport traffic" -j ACCEPT'
