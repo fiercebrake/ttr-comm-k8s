@@ -14,7 +14,7 @@
     state: started
     enabled: yes
 
-- name: 'install calico cni'
+- name: 'download calico images'
   ansible.builtin.shell:
     cmd: "crictl pull --creds {{ hostvars['localhost']['dokuser'] }}:{{ hostvars['localhost']['dokpass'] }} docker.io/calico/{{ item }}"
   with_items:
@@ -22,3 +22,7 @@
     - 'cni:v3.27.2'
     - 'typha:v3.27.2'
     - 'node-driver-registrar:v3.27.2'
+    - 'pod2daemon-flexvol:v3.27.2'
+    - 'csi:v3.27.2'
+    - 'node:v3.27.2'
+    
