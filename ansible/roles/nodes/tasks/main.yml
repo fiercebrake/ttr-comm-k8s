@@ -8,8 +8,6 @@
 - name: 'join nodes'
   ansible.builtin.shell: 
     cmd: "{{ joinnode }}"
-  async: 90
-  poll: 0 
   register: nodejoin
 
 - ansible.builtin.debug:
