@@ -2,7 +2,7 @@ data "aws_ami" "ami" {
   most_recent = true
   filter {
     name   = "image-id"
-    values = ["ami-0819ff1ad0ab25a23"]
+    values = ["ami-005e7ad4cc68c5736"]
   }
 }
 

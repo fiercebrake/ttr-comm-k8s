@@ -4,8 +4,8 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - {src: './roles/os/files/cri-o.repo', dest:'/etc/yum.repos.d/cri-o.repo'}
-    - {src: './roles/os/files/kubernetes.repo', dest:'/etc/yum.repos.d/kubernetes.repo'}
+    - {src: './roles/os/files/cri-o.repo', dest: '/etc/yum.repos.d/cri-o.repo'}
+    - {src: './roles/os/files/kubernetes.repo', dest: '/etc/yum.repos.d/kubernetes.repo'}
 
 - name: 'install dependency packages'
   ansible.builtin.yum:
@@ -18,7 +18,7 @@
 
 - name: 'k8s bash completion'
   ansible.builtin.lineinfile:
-    path: '/root/.bashrc'
+    path: '/root/.bashrc'`  
     line: 'source /usr/share/bash-completion/bash_completion'
     state: present
 
