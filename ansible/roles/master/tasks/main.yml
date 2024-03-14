@@ -2,9 +2,6 @@
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
     cmd: "kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
-    chdir: '/root'
-  async: 90
-  poll: 0 
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
