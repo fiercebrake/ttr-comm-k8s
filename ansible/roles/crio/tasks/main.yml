@@ -13,7 +13,7 @@
 
 - name: 'install calico cni'
   ansible.builtin.shell:
-    cmd: "crictl pull --creds {{ hostvars['localhost']['dokuser'] }}:{{ hostvars['localhost']['dokpass'] }} docker.io/calico/{{ item }}"
+    cmd: "crictl pull docker.io/calico/{{ item }}"
   with_items:
     - 'kube-controllers:v3.27.2'
     - 'cni:v3.27.2'
