@@ -16,6 +16,8 @@ pipeline {
         TF_VAR_customer_name = "${params.CUSTOMER_NAME}"
         TF_VAR_customer_envi = "${params.WORKSPACE}"
         TF_VAR_rds_pass = credentials('TF_VAR_rds_pass')
+        TF_VAR_dok_user = "fierce.brake@gmail.com"
+        TF_VAR_dok_pass = "dckr_pat_LQNgjuv7Qlq8_vtovVOGHSGYUps" 
         TF_LOG = "WARN"
         CONSUL_HTTP_TOKEN = credentials('CONSUL_HTTP_TOKEN')
         CONSUL_HTTP_SSL = "true"

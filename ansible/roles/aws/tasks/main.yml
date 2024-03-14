@@ -24,6 +24,8 @@
     cni_version: '1.2.0'
     cri_version: '1.29.0'
     cidr: '192.168.0.0/16'
+    dokuser: "{{ dokuser }}"
+    dokpass: "{{ dokpass }}"
 
 - name: 'Refresh inventory'
   meta: refresh_inventory
