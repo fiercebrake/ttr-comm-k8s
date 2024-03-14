@@ -1,165 +1,26 @@
 ---
-- name: 'stop and disable nginx'
-  ansible.builtin.service:
-    name: "{{ item }}"
-    state: stopped
-    enabled: no
+- name: 'coopy repositories over'
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   with_items:
-    - 'nginx'
-    - 'fail2ban'
-    - 'iptables'
+    - {src: './roles/os/files/cri-o.repo', dest:'/etc/yum.repos.d/cri-o.repo'}
+    - {src: './roles/os/files/kubernetes.repo', dest:'/etc/yum.repos.d/kubernetes.repo'}
 
-- name: 'install required packages'
+- name: 'install dependency packages'
   ansible.builtin.yum:
     lock_timeout: 90
     name: 
       - 'socat'
       - 'iproute-tc'
       - 'conntrack-tools'
-    state: present
-
-- name: 'containerd package download'
-  ansible.builtin.get_url:
-    url: "https://github.com/containerd/containerd/releases/download/v{{ hostvars['localhost']['ctd_version'] }}/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
-    dest: '/tmp/'
- 
-- name: 'containerd extract'
-  ansible.builtin.unarchive:
-    remote_src: 'yes'
-    src: "/tmp/containerd-{{ hostvars['localhost']['ctd_version'] }}-linux-amd64.tar.gz"
-    dest: '/usr/local'
-
-- name: 'containerd service install'
-  ansible.builtin.get_url:
-    url: 'https://raw.githubusercontent.com/containerd/containerd/main/containerd.service'
-    dest: '/etc/systemd/system/'
-
-- name: 'containerd create directory'
-  ansible.builtin.file:
-    path: '/etc/containerd/'
-    state: directory
-
-- name: 'containerd generate conf'
-  ansible.builtin.shell: 
-    cmd: '/usr/local/bin/containerd config default'
-  register: config
-
-- name: 'containerd write conf'
-  ansible.builtin.copy: 
-    content: "{{ config.stdout }}"
-    dest: "/etc/containerd/config.toml"
-
-- name: 'containerd tweak 0'
-  ansible.builtin.replace:
-    path: '/etc/containerd/config.toml'
-    regexp: 'pause:3.8'
-    replace: 'pause:3.9'
-
-- name: 'containerd tweak 1'
-  ansible.builtin.replace:
-    path: '/etc/containerd/config.toml'
-    regexp: 'SystemdCgroup = false'
-    replace: 'SystemdCgroup = true'
-
-- name: 'containerd service enabled'
-  ansible.builtin.command: "{{ item }}"
-  with_items:
-    - 'systemctl daemon-reload'
-    - 'systemctl enable --now containerd'
-  notify:
-    - 'containerd restart'
-
-- name: 'runc package download'
-  ansible.builtin.get_url:
-    url: "https://github.com/opencontainers/runc/releases/download/v{{ hostvars['localhost']['rnc_version'] }}/runc.amd64"
-    dest: '/tmp/'
-
-- name: 'runc install'
-  ansible.builtin.command: "install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc"
-
-- name: 'cni package download'
-  ansible.builtin.get_url:
-    url: "https://github.com/containernetworking/plugins/releases/download/v{{ hostvars['localhost']['cni_version'] }}/cni-plugins-linux-amd64-v{{ hostvars['localhost']['cni_version'] }}.tgz"
-    dest: '/tmp/'
-
-- name: 'cni directory creation'
-  ansible.builtin.file:
-    path: '/opt/cni/bin/'
-    state: directory
-
-- name: 'cni install'
-  ansible.builtin.unarchive:
-    remote_src: 'yes'
-    src: "/tmp/cni-plugins-linux-amd64-v{{ hostvars['localhost']['cni_version'] }}.tgz"
-    dest: '/opt/cni/bin/'
+    state: latest
 
 - name: 'k8s bash completion'
   ansible.builtin.lineinfile:
     path: '/root/.bashrc'
     line: 'source /usr/share/bash-completion/bash_completion'
     state: present
-
-- name: 'k8s bin downloads'
-  ansible.builtin.get_url:
-    url: "https://dl.k8s.io/v{{ hostvars['localhost']['k8s_version'] }}/bin/linux/amd64/{{ item }}"
-    dest: '/tmp/'
-  with_items:
-    - 'apiextensions-apiserver'
-    - 'kube-controller-manager'
-    - 'kube-aggregator'
-    - 'kube-log-runner'
-    - 'kubectl-convert'
-    - 'kube-apiserver'
-    - 'kube-scheduler' 
-    - 'kube-proxy'
-    - 'kubeadm'
-    - 'kubectl' 
-    - 'kubelet' 
-    - 'mounter'
-
-- name: 'install k8 executables'
-  ansible.builtin.shell: "sudo install -v -o root -g root -m 0777 /tmp/{{ item }} /usr/bin/{{ item }}"
-  with_items:
-    - 'apiextensions-apiserver'
-    - 'kube-aggregator'
-    - 'kube-apiserver'
-    - 'kube-controller-manager'
-    - 'kube-log-runner'
-    - 'kube-proxy'
-    - 'kube-scheduler'
-    - 'kubeadm'
-    - 'kubectl'
-    - 'kubectl-convert'
-    - 'kubelet'
-    - 'mounter'
-
-- name: 'copy over kubelet.service file'
-  ansible.builtin.template:
-    src: './roles/os/files/kubelet.service'
-    dest: '/etc/systemd/system/'
-
-- name: 'create kubeadm directory'
-  ansible.builtin.file:
-    path: '/etc/systemd/system/kubelet.service.d/'
-    state: directory
-
-- name: 'copy over kubeadm file'
-  ansible.builtin.template:
-    src: './roles/os/files/10-kubeadm.conf'
-    dest: '/etc/systemd/system/kubelet.service.d/'
-
-- name: 'crictl download'
-  ansible.builtin.get_url:
-    url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/v{{ hostvars['localhost']['cri_version'] }}/crictl-v{{ hostvars['localhost']['cri_version'] }}-linux-amd64.tar.gz"
-    dest: '/tmp/'
-
-- name: 'crictl extract/install'
-  ansible.builtin.unarchive:
-    remote_src: 'yes'
-    src: "/tmp/crictl-v{{ hostvars['localhost']['cri_version'] }}-linux-amd64.tar.gz"
-    dest: '/usr/bin/'
-    owner: 'root'
-    group: 'root'
 
 - name: 'load overlay and br_netfilter mods'
   ansible.builtin.command: "modprobe {{ item }}"
@@ -203,8 +64,3 @@
     line: "{{ ips[item] }} {{ servers[item] }}"
     state: present
   with_items: "{{ range(0, servers | length) }}"
-
-- name: 'enable kubelet service'
-  ansible.builtin.service:
-    name: kubelet.service
-    enabled: yes

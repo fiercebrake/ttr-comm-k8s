@@ -19,6 +19,8 @@
     ansible_python_interpreter: "{{ ansible_playbook_python }}"
   roles:
    - os
+   - crio
+   - k8s
 
 - name: 'cluster bootstrap'
   hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
@@ -31,35 +33,35 @@
   roles:
     - master
 
-- name: 'join nodes to cluster'
-  hosts: "{{ hostvars['localhost']['lst_ips'] | difference(hostvars['localhost']['lst_ips'][0]) }}"
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-    - nodes
+# - name: 'join nodes to cluster'
+#   hosts: "{{ hostvars['localhost']['lst_ips'] | difference(hostvars['localhost']['lst_ips'][0]) }}"
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#     - nodes
 
-- name: 'restart all nodes'
-  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-   - restart
+# - name: 'restart all nodes'
+#   hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#    - restart
 
-- name: 'app deployment'
-  hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
-  port: '45100'
-  become: 'True'
-  become_user: 'root'
-  gather_facts: False
-  vars:
-    ansible_python_interpreter: "{{ ansible_playbook_python }}"
-  roles:
-    - app
+# - name: 'app deployment'
+#   hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"
+#   port: '45100'
+#   become: 'True'
+#   become_user: 'root'
+#   gather_facts: False
+#   vars:
+#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
+#   roles:
+#     - app

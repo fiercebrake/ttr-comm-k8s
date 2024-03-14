@@ -1,9 +1,10 @@
 ---
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "/usr/bin/kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+    cmd: "kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
     chdir: '/root'
-    creates: cluster_initialized.txt
+  async: 90
+  poll: 0 
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
@@ -18,20 +19,12 @@
     owner: 'root'
     group: 'root'
     
-- name: 'calico yaml copy'
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: 'root'
-    group: 'root'
+- name: 'install calico cni'
+  ansible.builtin.shell:
+    cmd: "{{ iteem}}"
   with_items:
-    - {src: './roles/master/files/calico.yaml', dest: '/root/calico.yaml'}
-    - {src: './roles/master/files/java-hw.yml', dest: '/root/java-hw.yml'}
-
-- name: 'calico pod network deployment'
-  ansible.builtin.shell: 
-    cmd: "sudo /usr/bin/kubectl create -f /root/calico.yaml"
-    chdir: '/usr/bin'
+    - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/tigera-operator.yaml'
+    - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/custom-resources.yaml'
   async: 90
   poll: 0 
 
