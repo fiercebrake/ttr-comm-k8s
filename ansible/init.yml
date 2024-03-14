@@ -9,18 +9,18 @@
   roles:
    - aws
 
-# - name: 'install and copnfigure packages on all servers'
-#   hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
-#   port: '45100'
-#   become: 'True'
-#   become_user: 'root'
-#   gather_facts: False
-#   vars:
-#     ansible_python_interpreter: "{{ ansible_playbook_python }}"
-#   roles:
-#    - os
-#    - crio
-#    - k8s
+- name: 'install and copnfigure packages on all servers'
+  hosts: "{{ hostvars['localhost']['lst_ips'] }}" 
+  port: '45100'
+  become: 'True'
+  become_user: 'root'
+  gather_facts: False
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  roles:
+   - os
+   - crio
+   - k8s
 
 - name: 'cluster bootstrap'
   hosts: "{{ hostvars['localhost']['lst_ips'][0] }}"

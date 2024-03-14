@@ -21,3 +21,8 @@
   with_items:
     - '-A INPUT -p tcp --dport 10250:10259 -m comment --comment "node traffic" -j ACCEPT'
     - '-A INPUT -p tcp --dport 30000:32767 -m comment --comment "nodeport traffic" -j ACCEPT'
+
+- name: 'iptables restart'
+  ansible.builtin.service:
+    name: 'iptables'
+    state: restarted
