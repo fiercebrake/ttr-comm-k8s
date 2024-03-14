@@ -2,8 +2,11 @@
 - name: 'install cri-o'
   ansible.builtin.yum:
     lock_timeout: 90
-    name: 'cri-o'
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - 'cri-tools'
+    - 'cri-o'
 
 - name: 'start cri-o service'
   ansible.builtin.service:
