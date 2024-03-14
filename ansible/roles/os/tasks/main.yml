@@ -18,7 +18,7 @@
 
 - name: 'k8s bash completion'
   ansible.builtin.lineinfile:
-    path: '/root/.bashrc'`  
+    path: '/root/.bashrc'
     line: 'source /usr/share/bash-completion/bash_completion'
     state: present
 
