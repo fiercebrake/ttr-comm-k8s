@@ -1,5 +1,5 @@
 ---
-- name: 'install cri-o'
+- name: 'install k8s'
   ansible.builtin.yum:
     lock_timeout: 90
     name: "{{ item }}"
@@ -9,7 +9,7 @@
     - 'kubeadm'
     - 'kubectl'
 
-- name: 'start cri-o service'
+- name: 'start kubelet service'
   ansible.builtin.service:
     name: 'kubelet'
     state: started
