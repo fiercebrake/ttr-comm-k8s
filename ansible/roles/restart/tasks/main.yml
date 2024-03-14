@@ -1,10 +1,4 @@
 ---
-- name: 'start and enablee iptables'
-  ansible.builtin.service:
-    name: 'iptables'
-    state: started
-    enabled: yes
-
 - name: 'reboot all instances'
   ansible.builtin.reboot:
 

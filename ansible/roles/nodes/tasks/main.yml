@@ -11,7 +11,7 @@
   register: nodejoin
 
 - ansible.builtin.debug:
-    var: nodejoin
+    var: nodejoin.stdout
 
 - name: 'nodes firewall security'
   ansible.builtin.lineinfile:
