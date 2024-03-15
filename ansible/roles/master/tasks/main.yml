@@ -1,7 +1,7 @@
 ---
 - name: 'cluster bootstrap'
   ansible.builtin.shell: 
-    cmd: "kubeadm init --pod-network-cidr {{ hostvars['localhost']['cidr'] }} --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
+    cmd: "kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address {{ hostvars['localhost']['lst_ips'][0] }} --kubernetes-version {{ hostvars['localhost']['k8s_version'] }} --node-name {{ hostvars['localhost']['lst_servers'][0] }}"
 
 - name: 'configure root account as cluster admin'
   ansible.builtin.file:
@@ -23,11 +23,17 @@
 #     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/tigera-operator.yaml'
 #     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/custom-resources.yaml'
 
-- name: 'install calico cni'
+# - name: 'install calico cni'
+#   ansible.builtin.shell:
+#     cmd: "{{ item}}"
+#   with_items:
+#     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml'
+
+- name: 'install flannel cni'
   ansible.builtin.shell:
     cmd: "{{ item}}"
   with_items:
-    - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml'
+    - 'kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml'
 
 - name: 'master firewall security'
   ansible.builtin.lineinfile:
