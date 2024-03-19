@@ -23,17 +23,11 @@
 #     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/tigera-operator.yaml'
 #     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/custom-resources.yaml'
 
-# - name: 'install calico cni'
-#   ansible.builtin.shell:
-#     cmd: "{{ item}}"
-#   with_items:
-#     - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml'
-
-- name: 'install aws cni'
+- name: 'install calico cni'
   ansible.builtin.shell:
     cmd: "{{ item}}"
   with_items:
-    - 'kubectl apply -f https://github.com/aws/amazon-vpc-cni-k8s/blob/master/config/master/aws-k8s-cni.yaml'
+    - 'kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml'
 
 - name: 'master firewall security'
   ansible.builtin.lineinfile:
